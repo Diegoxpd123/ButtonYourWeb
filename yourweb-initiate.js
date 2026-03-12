@@ -281,7 +281,9 @@
 
     _applyWormFallback() {
       if (!this._btn) return;
-      this._btn.classList.add("worm-use-transform");
+      if (window.self !== window.top) {
+        this._btn.classList.add("worm-use-transform");
+      }
     }
 
     attributeChangedCallback() {
