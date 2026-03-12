@@ -23,6 +23,7 @@
  * - glitch-intensity   : número (ej. 1, 1.5, 2) – intensidad del glitch (default: "1")
  * - icon               : "on" | "off" – mostrar u ocultar el círculo junto al texto (default: "on")
  * - solidity           : número 0–1 – solidez del fondo (0 = transparente, 1 = más sólido) (default: "0")
+ * - hover-glow         : "on" | "off" – glow extra al hover (default: "on")
  *
  * Ejemplo uso:
  * <yourweb-initiate
@@ -211,6 +212,11 @@
     "    0 0 22px color-mix(in srgb, var(--yw-primary) 70%, transparent),",
     "    0 0 36px color-mix(in srgb, var(--yw-primary) 60%, transparent);",
     "}",
+    ".cta-btn.no-hover-glow:hover{",
+    "  box-shadow:",
+    "    0 0 0 1px color-mix(in srgb, var(--yw-primary) 50%, transparent),",
+    "    0 0 calc(18px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 35%, transparent);",
+    "}",
     ".cta-btn:active{",
     "  transform:translateY(0) scale(0.99);",
     "  box-shadow:",
@@ -246,7 +252,8 @@
         "shadow",
         "glitch-intensity",
         "icon",
-        "solidity"
+        "solidity",
+        "hover-glow"
       ];
     }
 
@@ -386,6 +393,11 @@
         this._btn.classList.add("no-icon");
       } else {
         this._btn.classList.remove("no-icon");
+      }
+      if (this._isOff(this.getAttribute("hover-glow"))) {
+        this._btn.classList.add("no-hover-glow");
+      } else {
+        this._btn.classList.remove("no-hover-glow");
       }
     }
 

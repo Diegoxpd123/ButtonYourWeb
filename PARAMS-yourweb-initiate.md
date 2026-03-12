@@ -138,6 +138,12 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
   - Valor: número entre `0` y `1`. `0` = fondo más transparente (default). `1` = fondo más sólido/opaco.  
   - Ejemplo: `solidity="0.5"` o `solidity="1"` para un color más lleno.
 
+- **hover-glow**  
+  - Qué hace: Activa/desactiva el glow extra que aparece al pasar el mouse (hover).  
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
+  - Desactivar: `"off"`, `"false"`, `"0"`, `"no"` → sin halo extra en hover.  
+  - Ejemplo: `hover-glow="off"`
+
 ---
 
 ## Ejemplos de uso
