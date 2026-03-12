@@ -251,6 +251,11 @@
       super();
       this._btn = null;
       this._inner = null;
+      this._wormRafId = 0;
+      this._wormUseJs = false;
+      this._wormProbeT1 = 0;
+      this._wormProbeT2 = 0;
+      this._wormStartTs = 0;
       this.attachShadow({ mode: "open" });
 
       var style = document.createElement("style");
@@ -278,6 +283,11 @@
       this._applyAttributesToCSS();
       this._updateContent();
       this._bindClick();
+    }
+
+    disconnectedCallback() {
+      this._stopWormJs();
+      this._clearWormProbe();
     }
 
     attributeChangedCallback() {
@@ -358,8 +368,11 @@
       }
       if (this._isOn(this.getAttribute("worm"))) {
         this._btn.classList.add("worm-on");
+        this._ensureWormMoves();
       } else {
         this._btn.classList.remove("worm-on");
+        this._stopWormJs();
+        this._clearWormProbe();
       }
       if (this._isOff(this.getAttribute("shadow"))) {
         this._btn.classList.add("no-shadow");
@@ -371,6 +384,73 @@
       } else {
         this._btn.classList.remove("no-icon");
       }
+    }
+
+    _ensureWormMoves() {
+      if (!this._btn) return;
+      if (this._wormUseJs) return;
+
+      this._clearWormProbe();
+
+      var btn = this._btn;
+      var readAngle = function () {
+        try {
+          return (getComputedStyle(btn).getPropertyValue("--gradient-angle") || "").trim();
+        } catch (e) {
+          return "";
+        }
+      };
+
+      // Probe if CSS animation is actually updating the registered custom property.
+      var a1 = "";
+      var a2 = "";
+      this._wormProbeT1 = window.setTimeout(() => {
+        a1 = readAngle();
+        this._wormProbeT2 = window.setTimeout(() => {
+          a2 = readAngle();
+          // If angle doesn't change, fallback to JS-driven angle updates.
+          if (a1 && a2 && a1 === a2) this._startWormJs();
+          if (!a1 && !a2) this._startWormJs();
+        }, 260);
+      }, 160);
+    }
+
+    _clearWormProbe() {
+      if (this._wormProbeT1) window.clearTimeout(this._wormProbeT1);
+      if (this._wormProbeT2) window.clearTimeout(this._wormProbeT2);
+      this._wormProbeT1 = 0;
+      this._wormProbeT2 = 0;
+    }
+
+    _startWormJs() {
+      if (!this._btn) return;
+      if (this._wormRafId) return;
+      this._wormUseJs = true;
+      this._wormStartTs = 0;
+
+      var btn = this._btn;
+      var durationMs = 2800;
+
+      var tick = (ts) => {
+        if (!this._btn || !this._btn.classList.contains("worm-on")) {
+          this._stopWormJs();
+          return;
+        }
+        if (!this._wormStartTs) this._wormStartTs = ts;
+        var t = (ts - this._wormStartTs) % durationMs;
+        var angle = (t / durationMs) * 360;
+        btn.style.setProperty("--gradient-angle", angle.toFixed(2) + "deg");
+        this._wormRafId = window.requestAnimationFrame(tick);
+      };
+
+      this._wormRafId = window.requestAnimationFrame(tick);
+    }
+
+    _stopWormJs() {
+      if (this._wormRafId) window.cancelAnimationFrame(this._wormRafId);
+      this._wormRafId = 0;
+      this._wormUseJs = false;
+      this._wormStartTs = 0;
     }
 
     _updateContent() {
