@@ -19,6 +19,7 @@
  * - size-height        : alto del botón (ej. "48px")
  * - glitch             : "on" | "off" (default: "on")
  * - worm               : "on" | "off" (borde animado, default: "on")
+ * - shadow             : "on" | "off" – sombra/glow del botón (default: "on")
  *
  * Ejemplo uso:
  * <yourweb-initiate
@@ -214,7 +215,12 @@
     "  box-shadow:",
     "    0 0 0 1px color-mix(in srgb, var(--yw-primary) 80%, transparent),",
     "    0 0 18px color-mix(in srgb, var(--yw-primary) 65%, transparent);",
-    "}"
+    "}",
+    ".cta-btn.no-shadow,",
+    ".cta-btn.no-shadow:hover,",
+    ".cta-btn.no-shadow:active{box-shadow:none;}",
+    ".cta-btn.no-shadow::before{box-shadow:none;}",
+    ".cta-btn.no-shadow .cta-icon{box-shadow:none;}",
   ].join("");
 
   class YourWebInitiate extends HTMLElement {
@@ -234,7 +240,8 @@
         "size-width",
         "size-height",
         "glitch",
-        "worm"
+        "worm",
+        "shadow"
       ];
     }
 
@@ -351,6 +358,11 @@
         this._btn.classList.add("worm-on");
       } else {
         this._btn.classList.remove("worm-on");
+      }
+      if (this._isOff(this.getAttribute("shadow"))) {
+        this._btn.classList.add("no-shadow");
+      } else {
+        this._btn.classList.remove("no-shadow");
       }
     }
 

@@ -116,6 +116,12 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
   - Desactivar: `"off"`, `"false"`, `"0"`, `"no"`  
   - Ejemplo: `worm="on"` o `worm="off"`
 
+- **shadow**  
+  - Qué hace: Muestra u oculta la sombra/glow del botón (y del icono).  
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
+  - Desactivar: `"off"`, `"false"`, `"0"`, `"no"` → sin sombra ni glow.  
+  - Ejemplo: `shadow="off"` para botón sin sombra.
+
 ---
 
 ## Ejemplos de uso
@@ -178,5 +184,5 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
      - `primary-color`, `text-color`
      - `size-width`, `size-height`, `padding`, `radius`
      - `font-family`, `font-size`, `letter-spacing`, `text-transform`
-     - `glitch`, `worm`, `glow-strength`.
+     - `glitch`, `worm`, `shadow`, `glow-strength`.
 
