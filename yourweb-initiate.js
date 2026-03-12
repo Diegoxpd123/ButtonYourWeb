@@ -116,10 +116,6 @@
     ".cta-btn.worm-on::after{",
     "  animation:rotate-gradient 2.8s linear infinite;",
     "}",
-    ".cta-btn.worm-use-transform.worm-on::after{",
-    "  background-image:conic-gradient(from 0deg at 50% 50%,transparent 0,transparent 33%,var(--yw-primary) 50%,transparent 66%,transparent 100%);",
-    "  animation:worm-rotate 2.8s linear infinite;",
-    "}",
     ".cta-btn-inner{",
     "  position:relative;",
     "  z-index:1;",
@@ -199,9 +195,6 @@
     " 0%{--gradient-angle:0deg;}",
     " 100%{--gradient-angle:360deg;}",
     "}",
-    "@keyframes worm-rotate{",
-    " to{transform:rotate(360deg);}",
-    "}",
     ".cta-btn.glitch-on .cta-label-main{animation:label-glitch 2.8s infinite;}",
     ".cta-btn.glitch-on .cta-label-ghost{animation:ghost-glitch 2.8s infinite;}",
     ".cta-btn.glitch-on .cta-scanline{animation:scanline 2.8s infinite;}",
@@ -276,17 +269,9 @@
     }
 
     connectedCallback() {
-      this._applyWormFallback();
       this._applyAttributesToCSS();
       this._updateContent();
       this._bindClick();
-    }
-
-    _applyWormFallback() {
-      if (!this._btn) return;
-      if (window.self !== window.top) {
-        this._btn.classList.add("worm-use-transform");
-      }
     }
 
     attributeChangedCallback() {
