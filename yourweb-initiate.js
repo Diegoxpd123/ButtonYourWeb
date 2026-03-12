@@ -33,6 +33,7 @@
  */
 (function () {
   var STYLES = [
+    "@property --gradient-angle{syntax:\"<angle>\";initial-value:0deg;inherits:false;}",
     ":host{display:inline-block;margin:16px;}",
     ":host{",
     "  --yw-primary:#A6D40D;",
@@ -51,6 +52,7 @@
     ".cta-btn{",
     "  all:unset;",
     "  position:relative;",
+    "  --gradient-angle:0deg;",
     "  display:inline-flex;",
     "  align-items:center;",
     "  justify-content:center;",
@@ -93,7 +95,7 @@
     "  border-radius:inherit;",
     "  padding:2px;",
     "  background-image:conic-gradient(",
-    "    from 0deg at 50% 50%,",
+    "    from var(--gradient-angle) at 50% 50%,",
     "    transparent 0,",
     "    transparent 33%,",
     "    var(--yw-primary) 50%,",
@@ -109,6 +111,10 @@
     "  animation:none;",
     "}",
     ".cta-btn.worm-on::after{",
+    "  animation:rotate-gradient 2.8s linear infinite;",
+    "}",
+    ".cta-btn.worm-use-transform.worm-on::after{",
+    "  background-image:conic-gradient(from 0deg at 50% 50%,transparent 0,transparent 33%,var(--yw-primary) 50%,transparent 66%,transparent 100%);",
     "  animation:worm-rotate 2.8s linear infinite;",
     "}",
     ".cta-btn-inner{",
@@ -186,6 +192,10 @@
     " 40%{opacity:.08;}",
     " 100%{opacity:0;transform:translateY(120%);}",
     "}",
+    "@keyframes rotate-gradient{",
+    " 0%{--gradient-angle:0deg;}",
+    " 100%{--gradient-angle:360deg;}",
+    "}",
     "@keyframes worm-rotate{",
     " to{transform:rotate(360deg);}",
     "}",
@@ -240,7 +250,7 @@
 
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "cta-btn";
+      btn.className = "cta-btn glitch-on worm-on";
       btn.innerHTML =
         '<div class="cta-btn-inner">' +
         '  <span class="cta-label">' +
@@ -256,9 +266,15 @@
     }
 
     connectedCallback() {
+      this._applyWormFallback();
       this._applyAttributesToCSS();
       this._updateContent();
       this._bindClick();
+    }
+
+    _applyWormFallback() {
+      if (!this._btn) return;
+      this._btn.classList.add("worm-use-transform");
     }
 
     attributeChangedCallback() {
