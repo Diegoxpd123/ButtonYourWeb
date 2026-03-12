@@ -21,6 +21,8 @@
  * - worm               : "on" | "off" (borde animado, default: "on")
  * - shadow             : "on" | "off" – sombra/glow del botón (default: "on")
  * - glitch-intensity   : número (ej. 1, 1.5, 2) – intensidad del glitch (default: "1")
+ * - icon               : "on" | "off" – mostrar u ocultar el círculo junto al texto (default: "on")
+ * - solidity           : número 0–1 – solidez del fondo (0 = transparente, 1 = más sólido) (default: "0")
  *
  * Ejemplo uso:
  * <yourweb-initiate
@@ -51,6 +53,7 @@
     "  --yw-size-width:auto;",
     "  --yw-size-height:auto;",
     "  --yw-glitch-intensity:1;",
+    "  --yw-bg-solidity:0;",
     "}",
     ".cta-btn{",
     "  all:unset;",
@@ -75,8 +78,8 @@
     "  font-weight:700;",
     "  font-family:var(--yw-font-family);",
     "  background:",
-    "    radial-gradient(circle at 0 0, color-mix(in srgb, var(--yw-primary) 40%, transparent) 0, transparent 55%),",
-    "    linear-gradient(120deg, color-mix(in srgb, var(--yw-primary) 30%, transparent) 0, color-mix(in srgb, var(--yw-primary) 4%, transparent) 100%);",
+    "    radial-gradient(circle at 0 0, color-mix(in srgb, var(--yw-primary) calc(40% + 35% * var(--yw-bg-solidity, 0)), transparent) 0, transparent 55%),",
+    "    linear-gradient(120deg, color-mix(in srgb, var(--yw-primary) calc(30% + 40% * var(--yw-bg-solidity, 0)), transparent) 0, color-mix(in srgb, var(--yw-primary) calc(4% + 46% * var(--yw-bg-solidity, 0)), transparent) 100%);",
     "  box-shadow:",
     "    0 0 0 1px color-mix(in srgb, var(--yw-primary) 50%, transparent),",
     "    0 0 calc(18px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 35%, transparent);",
@@ -216,6 +219,7 @@
     ".cta-btn.no-shadow:active{box-shadow:none;}",
     ".cta-btn.no-shadow::before{box-shadow:none;}",
     ".cta-btn.no-shadow .cta-icon{box-shadow:none;}",
+    ".cta-btn.no-icon .cta-icon{display:none;}",
   ].join("");
 
   class YourWebInitiate extends HTMLElement {
@@ -237,7 +241,9 @@
         "glitch",
         "worm",
         "shadow",
-        "glitch-intensity"
+        "glitch-intensity",
+        "icon",
+        "solidity"
       ];
     }
 
@@ -341,6 +347,9 @@
       var glitchIntensity = this.getAttribute("glitch-intensity");
       if (glitchIntensity != null && glitchIntensity !== "") root.style.setProperty("--yw-glitch-intensity", glitchIntensity);
 
+      var solidity = this.getAttribute("solidity");
+      if (solidity != null && solidity !== "") root.style.setProperty("--yw-bg-solidity", solidity);
+
       if (!this._btn) return;
       if (this._isOn(this.getAttribute("glitch"))) {
         this._btn.classList.add("glitch-on");
@@ -356,6 +365,11 @@
         this._btn.classList.add("no-shadow");
       } else {
         this._btn.classList.remove("no-shadow");
+      }
+      if (this._isOff(this.getAttribute("icon"))) {
+        this._btn.classList.add("no-icon");
+      } else {
+        this._btn.classList.remove("no-icon");
       }
     }
 

@@ -127,6 +127,17 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
   - Desactivar: `"off"`, `"false"`, `"0"`, `"no"` → sin sombra ni glow.  
   - Ejemplo: `shadow="off"` para botón sin sombra.
 
+- **icon**  
+  - Qué hace: Muestra u oculta el círculo (icono) junto al texto del botón.  
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: visible).  
+  - Desactivar: `"off"`, `"false"`, `"0"`, `"no"` → solo texto, sin círculo.  
+  - Ejemplo: `icon="off"` para quitar el círculo.
+
+- **solidity**  
+  - Qué hace: Solidez del fondo del botón (reduce la transparencia).  
+  - Valor: número entre `0` y `1`. `0` = fondo más transparente (default). `1` = fondo más sólido/opaco.  
+  - Ejemplo: `solidity="0.5"` o `solidity="1"` para un color más lleno.
+
 ---
 
 ## Ejemplos de uso
@@ -189,5 +200,5 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
      - `primary-color`, `text-color`
      - `size-width`, `size-height`, `padding`, `radius`
      - `font-family`, `font-size`, `letter-spacing`, `text-transform`
-     - `glitch`, `glitch-intensity`, `worm`, `shadow`, `glow-strength`.
+     - `glitch`, `glitch-intensity`, `worm`, `shadow`, `glow-strength`, `icon`, `solidity`.
 
