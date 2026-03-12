@@ -20,6 +20,7 @@
  * - glitch             : "on" | "off" (default: "on")
  * - worm               : "on" | "off" (borde animado, default: "on")
  * - shadow             : "on" | "off" – sombra/glow del botón (default: "on")
+ * - glitch-intensity   : número (ej. 1, 1.5, 2) – intensidad del glitch (default: "1")
  *
  * Ejemplo uso:
  * <yourweb-initiate
@@ -49,6 +50,7 @@
     "  --yw-glow-strength:1;",
     "  --yw-size-width:auto;",
     "  --yw-size-height:auto;",
+    "  --yw-glitch-intensity:1;",
     "}",
     ".cta-btn{",
     "  all:unset;",
@@ -175,22 +177,22 @@
     "}",
     "@keyframes label-glitch{",
     " 0%,88%,100%{transform:translate(0,0);}",
-    " 90%{transform:translate(-1px,0);}",
-    " 92%{transform:translate(1.5px,-0.5px);}",
-    " 94%{transform:translate(0,1px);}",
+    " 90%{transform:translate(calc(-1px * var(--yw-glitch-intensity, 1)), 0);}",
+    " 92%{transform:translate(calc(1.5px * var(--yw-glitch-intensity, 1)), calc(-0.5px * var(--yw-glitch-intensity, 1)));}",
+    " 94%{transform:translate(0, calc(1px * var(--yw-glitch-intensity, 1)));}",
     "}",
     "@keyframes ghost-glitch{",
     " 0%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 40% 0);}",
-    " 10%{opacity:.6;transform:translate(-2px,-1px);clip-path:inset(10% 0 55% 0);}",
-    " 20%{opacity:.4;transform:translate(2px,1px);clip-path:inset(40% 0 25% 0);}",
-    " 30%{opacity:.7;transform:translate(-1px,0);clip-path:inset(65% 0 5% 0);}",
-    " 40%{opacity:.2;transform:translate(1px,-1px);clip-path:inset(15% 0 60% 0);}",
-    " 50%{opacity:.5;transform:translate(-1px,1px);clip-path:inset(55% 0 15% 0);}",
+    " 10%{opacity:calc(0.6 * var(--yw-glitch-intensity, 1));transform:translate(calc(-2px * var(--yw-glitch-intensity, 1)), calc(-1px * var(--yw-glitch-intensity, 1)));clip-path:inset(10% 0 55% 0);}",
+    " 20%{opacity:calc(0.4 * var(--yw-glitch-intensity, 1));transform:translate(calc(2px * var(--yw-glitch-intensity, 1)), calc(1px * var(--yw-glitch-intensity, 1)));clip-path:inset(40% 0 25% 0);}",
+    " 30%{opacity:calc(0.7 * var(--yw-glitch-intensity, 1));transform:translate(calc(-1px * var(--yw-glitch-intensity, 1)), 0);clip-path:inset(65% 0 5% 0);}",
+    " 40%{opacity:calc(0.2 * var(--yw-glitch-intensity, 1));transform:translate(calc(1px * var(--yw-glitch-intensity, 1)), calc(-1px * var(--yw-glitch-intensity, 1)));clip-path:inset(15% 0 60% 0);}",
+    " 50%{opacity:calc(0.5 * var(--yw-glitch-intensity, 1));transform:translate(calc(-1px * var(--yw-glitch-intensity, 1)), calc(1px * var(--yw-glitch-intensity, 1)));clip-path:inset(55% 0 15% 0);}",
     " 60%,100%{opacity:0;transform:translate(0,0);clip-path:inset(0 0 0 0);}",
     "}",
     "@keyframes scanline{",
     " 0%{opacity:0;transform:translateY(-120%);}",
-    " 40%{opacity:.08;}",
+    " 40%{opacity:calc(0.08 * var(--yw-glitch-intensity, 1));}",
     " 100%{opacity:0;transform:translateY(120%);}",
     "}",
     "@keyframes rotate-gradient{",
@@ -241,7 +243,8 @@
         "size-height",
         "glitch",
         "worm",
-        "shadow"
+        "shadow",
+        "glitch-intensity"
       ];
     }
 
@@ -349,6 +352,9 @@
 
       var fontSize = this.getAttribute("font-size");
       if (fontSize) root.style.setProperty("--yw-font-size", fontSize);
+
+      var glitchIntensity = this.getAttribute("glitch-intensity");
+      if (glitchIntensity != null && glitchIntensity !== "") root.style.setProperty("--yw-glitch-intensity", glitchIntensity);
 
       if (!this._btn) return;
       if (this._isOn(this.getAttribute("glitch"))) {

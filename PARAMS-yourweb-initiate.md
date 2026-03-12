@@ -110,6 +110,11 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
   - Desactivar: `"off"`, `"false"`, `"0"`, `"no"`  
   - Ejemplo: `glitch="on"` o `glitch="off"`
 
+- **glitch-intensity**  
+  - Qué hace: Intensidad del efecto glitch (desplazamiento del texto, opacidad del ghost, scanline).  
+  - Default: `"1"`. Valores mayores (ej. `"1.5"`, `"2"`) aumentan la intensidad.  
+  - Ejemplo: `glitch-intensity="2"`
+
 - **worm**  
   - Qué hace: Activa/desactiva el “gusano” de energía que recorre el borde.  
   - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
@@ -184,5 +189,5 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
      - `primary-color`, `text-color`
      - `size-width`, `size-height`, `padding`, `radius`
      - `font-family`, `font-size`, `letter-spacing`, `text-transform`
-     - `glitch`, `worm`, `shadow`, `glow-strength`.
+     - `glitch`, `glitch-intensity`, `worm`, `shadow`, `glow-strength`.
 
