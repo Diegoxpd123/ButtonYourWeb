@@ -119,6 +119,9 @@
     ".cta-btn.worm-on::after{",
     "  animation:rotate-gradient 2.8s linear infinite;",
     "}",
+    ".cta-btn.worm-js::after{",
+    "  animation:none !important;",
+    "}",
     ".cta-btn-inner{",
     "  position:relative;",
     "  z-index:1;",
@@ -427,6 +430,7 @@
       if (this._wormRafId) return;
       this._wormUseJs = true;
       this._wormStartTs = 0;
+      this._btn.classList.add("worm-js");
 
       var btn = this._btn;
       var durationMs = 2800;
@@ -451,6 +455,7 @@
       this._wormRafId = 0;
       this._wormUseJs = false;
       this._wormStartTs = 0;
+      if (this._btn) this._btn.classList.remove("worm-js");
     }
 
     _updateContent() {
