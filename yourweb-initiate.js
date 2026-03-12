@@ -15,7 +15,8 @@
  * - glow-strength      : número 0–1 para intensidad del glow (default: "1")
  * - padding            : padding del botón (default: "16px 56px")
  * - radius             : border-radius (default: "999px")
- * - size               : "mobile" | "tablet" | "desktop" (ajusta padding y font-size si no se overridea)
+ * - size-width         : ancho del botón (ej. "200px", "100%")
+ * - size-height        : alto del botón (ej. "48px")
  * - glitch             : "on" | "off" (default: "on")
  * - worm               : "on" | "off" (borde animado, default: "on")
  *
@@ -25,7 +26,7 @@
  *   href="https://yourweb.com/initiate"
  *   primary-color="#A6D40D"
  *   font-family="IBM Plex Mono, system-ui, -apple-system, sans-serif"
- *   size="desktop"
+ *   size-width="auto" size-height="auto"
  *   glitch="on"
  *   worm="on">
  * </yourweb-initiate>
@@ -45,6 +46,8 @@
     "  --yw-padding-inline:56px;",
     "  --yw-radius:999px;",
     "  --yw-glow-strength:1;",
+    "  --yw-size-width:auto;",
+    "  --yw-size-height:auto;",
     "}",
     ".cta-btn{",
     "  all:unset;",
@@ -54,8 +57,12 @@
     "  align-items:center;",
     "  justify-content:center;",
     "  gap:10px;",
+    "  width:var(--yw-size-width);",
+    "  height:var(--yw-size-height);",
+    "  min-height:2.5em;",
     "  padding:var(--yw-padding-block) var(--yw-padding-inline);",
     "  border-radius:var(--yw-radius);",
+    "  box-sizing:border-box;",
     "  cursor:pointer;",
     "  overflow:hidden;",
     "  color:var(--yw-text);",
@@ -217,7 +224,8 @@
         "glow-strength",
         "padding",
         "radius",
-        "size",
+        "size-width",
+        "size-height",
         "glitch",
         "worm"
       ];
@@ -235,7 +243,7 @@
 
       var btn = document.createElement("button");
       btn.type = "button";
-      btn.className = "cta-btn glitch-on worm-on";
+      btn.className = "cta-btn";
       btn.innerHTML =
         '<div class="cta-btn-inner">' +
         '  <span class="cta-label">' +
@@ -251,7 +259,6 @@
     }
 
     connectedCallback() {
-      this._applySizePreset();
       this._applyAttributesToCSS();
       this._updateContent();
       this._bindClick();
@@ -259,31 +266,21 @@
 
     attributeChangedCallback() {
       if (!this.shadowRoot) return;
-      this._applySizePreset();
       this._applyAttributesToCSS();
       this._updateContent();
       this._bindClick();
     }
 
-    _applySizePreset() {
-      var size = (this.getAttribute("size") || "desktop").toLowerCase();
-      var root = this.shadowRoot.host;
-      if (!root) return;
+    _isOn(val) {
+      if (val == null || val === "") return true;
+      var v = String(val).toLowerCase().trim();
+      return v === "on" || v === "true" || v === "1" || v === "yes";
+    }
 
-      if (size === "mobile") {
-        root.style.setProperty("--yw-font-size", this.getAttribute("font-size") || "13px");
-        root.style.setProperty("--yw-padding-block", "12px");
-        root.style.setProperty("--yw-padding-inline", "32px");
-      } else if (size === "tablet") {
-        root.style.setProperty("--yw-font-size", this.getAttribute("font-size") || "14px");
-        root.style.setProperty("--yw-padding-block", "14px");
-        root.style.setProperty("--yw-padding-inline", "44px");
-      } else {
-        // desktop / default
-        root.style.setProperty("--yw-font-size", this.getAttribute("font-size") || "15px");
-        root.style.setProperty("--yw-padding-block", "16px");
-        root.style.setProperty("--yw-padding-inline", "56px");
-      }
+    _isOff(val) {
+      if (val == null || val === "") return false;
+      var v = String(val).toLowerCase().trim();
+      return v === "off" || v === "false" || v === "0" || v === "no";
     }
 
     _applyAttributesToCSS() {
@@ -323,20 +320,24 @@
         }
       }
 
-      // toggles
-      var glitch = (this.getAttribute("glitch") || "on").toLowerCase();
-      var worm = (this.getAttribute("worm") || "on").toLowerCase();
-      if (this._btn) {
-        if (glitch === "off") {
-          this._btn.classList.remove("glitch-on");
-        } else {
-          this._btn.classList.add("glitch-on");
-        }
-        if (worm === "off") {
-          this._btn.classList.remove("worm-on");
-        } else {
-          this._btn.classList.add("worm-on");
-        }
+      var sizeWidth = this.getAttribute("size-width");
+      if (sizeWidth != null && sizeWidth !== "") root.style.setProperty("--yw-size-width", sizeWidth);
+      var sizeHeight = this.getAttribute("size-height");
+      if (sizeHeight != null && sizeHeight !== "") root.style.setProperty("--yw-size-height", sizeHeight);
+
+      var fontSize = this.getAttribute("font-size");
+      if (fontSize) root.style.setProperty("--yw-font-size", fontSize);
+
+      if (!this._btn) return;
+      if (this._isOn(this.getAttribute("glitch"))) {
+        this._btn.classList.add("glitch-on");
+      } else {
+        this._btn.classList.remove("glitch-on");
+      }
+      if (this._isOn(this.getAttribute("worm"))) {
+        this._btn.classList.add("worm-on");
+      } else {
+        this._btn.classList.remove("worm-on");
       }
     }
 

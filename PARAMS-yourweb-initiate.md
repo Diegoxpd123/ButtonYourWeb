@@ -44,7 +44,7 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **font-size**  
   - Qué hace: Tamaño de letra.  
-  - Default: depende de `size` (15px desktop, 14px tablet, 13px mobile).  
+  - Default: `15px`  
   - Ejemplo: `font-size="16px"`
 
 - **letter-spacing**  
@@ -77,19 +77,21 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
   - Default: `"1"`  
   - Ejemplo: `glow-strength="1.2"`
 
-### Tamaño / responsive
+### Dimensiones del botón
 
-- **size**  
-  - Qué hace: Preset responsive de paddings y font-size.  
-  - Valores:
-    - `"mobile"`  → fuente ligeramente más pequeña, padding compacto.
-    - `"tablet"`  → intermedio.
-    - `"desktop"` → más grande (default).  
-  - Ejemplo: `size="mobile"`
+- **size-width**  
+  - Qué hace: Ancho del botón.  
+  - Default: `auto` (el botón se adapta al contenido).  
+  - Ejemplo: `size-width="280px"` o `size-width="100%"`
+
+- **size-height**  
+  - Qué hace: Alto del botón.  
+  - Default: `auto` (altura mínima por contenido y padding).  
+  - Ejemplo: `size-height="48px"`
 
 - **padding**  
-  - Qué hace: Override manual de padding del botón.  
-  - Default: según `size`.  
+  - Qué hace: Padding interno del botón.  
+  - Default: `16px 56px`.  
   - Formatos:
     - `"16px"` → aplica igual para vertical y horizontal.
     - `"16px 56px"` → `padding-block` y `padding-inline`.  
@@ -104,13 +106,15 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **glitch**  
   - Qué hace: Activa/desactiva el glitch del texto y la scanline.  
-  - Valores: `"on"` (default) | `"off"`  
-  - Ejemplo: `glitch="off"`
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
+  - Desactivar: `"off"`, `"false"`, `"0"`, `"no"`  
+  - Ejemplo: `glitch="on"` o `glitch="off"`
 
 - **worm**  
   - Qué hace: Activa/desactiva el “gusano” de energía que recorre el borde.  
-  - Valores: `"on"` (default) | `"off"`  
-  - Ejemplo: `worm="off"`
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
+  - Desactivar: `"off"`, `"false"`, `"0"`, `"no"`  
+  - Ejemplo: `worm="on"` o `worm="off"`
 
 ---
 
@@ -125,13 +129,14 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 </yourweb-initiate>
 ```
 
-### 2. Versión mobile compacta, glitch y gusano activos
+### 2. Botón con dimensiones fijas y glitch activo
 
 ```html
 <yourweb-initiate
   label="INITIATE"
   href="/initiate"
-  size="mobile"
+  size-width="260px"
+  size-height="52px"
   font-family="IBM Plex Mono, system-ui, -apple-system, sans-serif"
   primary-color="#A6D40D"
   glow-strength="0.9"
@@ -140,13 +145,14 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 </yourweb-initiate>
 ```
 
-### 3. Versión tablet con menos glitch y sin gusano
+### 3. Sin glitch ni gusano, dimensiones personalizadas
 
 ```html
 <yourweb-initiate
   label="INITIATE"
   href="https://yourweb.com/initiate"
-  size="tablet"
+  size-width="100%"
+  size-height="48px"
   font-size="14px"
   padding="14px 44px"
   primary-color="#A6D40D"
@@ -170,7 +176,7 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
    - Usar **Set Attributes** para ajustar:
      - `label`, `href`
      - `primary-color`, `text-color`
-     - `size`, `padding`, `radius`
+     - `size-width`, `size-height`, `padding`, `radius`
      - `font-family`, `font-size`, `letter-spacing`, `text-transform`
      - `glitch`, `worm`, `glow-strength`.
 
