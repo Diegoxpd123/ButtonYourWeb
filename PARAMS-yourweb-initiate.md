@@ -66,7 +66,7 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **text-color**  
   - Qué hace: Color del texto del botón.  
-  - Default: `#f5f5f5`  
+  - Default: mismo que `primary-color` (verde neón).  
   - Ejemplo: `text-color="#FFFFFF"`
 
 ### Glow / sombras
@@ -97,8 +97,18 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
     - `"16px 56px"` → `padding-block` y `padding-inline`.  
   - Ejemplo: `padding="14px 48px"`
 
+- **shape**  
+  - Qué hace: Forma del botón.  
+  - Valores: `"chamfer"` (esquinas cortadas, default) | `"pill"` (pastilla redondeada).  
+  - Ejemplo: `shape="chamfer"` o `shape="pill"`
+
+- **chamfer**  
+  - Qué hace: Tamaño del corte en las esquinas cuando `shape="chamfer"`.  
+  - Default: `10px`  
+  - Ejemplo: `chamfer="12px"`
+
 - **radius**  
-  - Qué hace: Border-radius del botón (forma de pastilla vs. más cuadrado).  
+  - Qué hace: Border-radius del botón cuando `shape="pill"`.  
   - Default: `999px` (pastilla).  
   - Ejemplo: `radius="20px"`
 
@@ -135,7 +145,8 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **solidity**  
   - Qué hace: Solidez del fondo del botón (reduce la transparencia).  
-  - Valor: número entre `0` y `1`. `0` = fondo más transparente (default). `1` = fondo más sólido/opaco.  
+  - Valor: número entre `0` y `1`. `0` = fondo más transparente. `1` = fondo más sólido/opaco.  
+  - Default: `"0.85"` (fondo oscuro tipo HUD).  
   - Ejemplo: `solidity="0.5"` o `solidity="1"` para un color más lleno.
 
 - **hover-glow**  
@@ -143,6 +154,12 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
   - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
   - Desactivar: `"off"`, `"false"`, `"0"`, `"no"` → sin halo extra en hover.  
   - Ejemplo: `hover-glow="off"`
+
+- **overload**  
+  - Qué hace: Vibración/sobrecarga suave del contenido interno (texto + icono). En hover vibra un poco más rápido.  
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
+  - Desactivar: `"off"`, `"false"`, `"0"`, `"no"`  
+  - Ejemplo: `overload="on"` o `overload="off"`
 
 ---
 
@@ -204,7 +221,7 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
    - Usar **Set Attributes** para ajustar:
      - `label`, `href`
      - `primary-color`, `text-color`
-     - `size-width`, `size-height`, `padding`, `radius`
+     - `size-width`, `size-height`, `padding`, `shape`, `chamfer`, `radius`
      - `font-family`, `font-size`, `letter-spacing`, `text-transform`
-     - `glitch`, `glitch-intensity`, `worm`, `shadow`, `glow-strength`, `icon`, `solidity`.
+     - `glitch`, `glitch-intensity`, `worm`, `shadow`, `glow-strength`, `icon`, `solidity`, `hover-glow`, `overload`.
 
