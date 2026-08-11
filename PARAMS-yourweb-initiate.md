@@ -38,19 +38,19 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **font-family**  
   - Qué hace: Fuente CSS.  
-  - Default: `"IBM Plex Mono", system-ui, -apple-system, sans-serif`  
+  - Default: `"Riosark", "Riosarkregular", sans-serif` (incluye `@font-face` interno).  
   - Ejemplo:  
-    `font-family="IBM Plex Mono, system-ui, -apple-system, sans-serif"`
+    `font-family="Riosark, Riosarkregular, sans-serif"`
 
 - **font-size**  
   - Qué hace: Tamaño de letra.  
-  - Default: `15px`  
+  - Default: `16px`  
   - Ejemplo: `font-size="16px"`
 
 - **letter-spacing**  
   - Qué hace: Tracking (espaciado entre letras).  
-  - Default: `0.22em`  
-  - Ejemplo: `letter-spacing="0.18em"`
+  - Default: `0.32em`  
+  - Ejemplo: `letter-spacing="0.28em"`
 
 - **text-transform**  
   - Qué hace: Transformación de texto.  
@@ -61,8 +61,8 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **primary-color**  
   - Qué hace: Color principal del botón, bordes y efectos.  
-  - Default: `#A6D40D` (YOURWEB)  
-  - Ejemplo: `primary-color="#A6D40D"`
+  - Default: `#C8FF00` (verde neón HUD)  
+  - Ejemplo: `primary-color="#C8FF00"`
 
 - **text-color**  
   - Qué hace: Color del texto del botón.  
@@ -116,7 +116,8 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **glitch**  
   - Qué hace: Activa/desactiva el glitch del texto y la scanline.  
-  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
+  - Default: desactivado (hay que poner `glitch="on"`).  
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"`  
   - Desactivar: `"off"`, `"false"`, `"0"`, `"no"`  
   - Ejemplo: `glitch="on"` o `glitch="off"`
 
@@ -127,7 +128,8 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **worm**  
   - Qué hace: Activa/desactiva el “gusano” de energía que recorre el borde.  
-  - Activar: `"on"`, `"true"`, `"1"`, `"yes"` (default: activado).  
+  - Default: desactivado (hay que poner `worm="on"`).  
+  - Activar: `"on"`, `"true"`, `"1"`, `"yes"`  
   - Desactivar: `"off"`, `"false"`, `"0"`, `"no"`  
   - Ejemplo: `worm="on"` o `worm="off"`
 
