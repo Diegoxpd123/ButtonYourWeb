@@ -50,10 +50,10 @@
     "@property --gradient-angle{syntax:\"<angle>\";initial-value:0deg;inherits:false;}",
     ":host{",
     "  display:block;",
-    "  width:100%;",
-    "  height:100%;",
+    "  width:var(--yw-size-width);",
+    "  height:var(--yw-size-height);",
     "  margin:0;",
-    "  padding:var(--yw-glow-pad);",
+    "  padding:0;",
     "  box-sizing:border-box;",
     "  container-type:size;",
     "  overflow:visible;",
@@ -68,7 +68,6 @@
     "  --yw-radius:999px;",
     "  --yw-chamfer:clamp(6px, 14cqh, 14px);",
     "  --yw-border:1.5px;",
-    "  --yw-glow-pad:clamp(8px, 4cqw, 18px);",
     "  --yw-glow-strength:1;",
     "  --yw-size-width:100%;",
     "  --yw-size-height:100%;",
@@ -109,10 +108,8 @@
     "  position:relative;",
     "  --gradient-angle:0deg;",
     "  display:block;",
-    "  width:var(--yw-size-width);",
-    "  height:var(--yw-size-height);",
-    "  max-width:100%;",
-    "  max-height:100%;",
+    "  width:100%;",
+    "  height:100%;",
     "  min-width:0;",
     "  min-height:0;",
     "  box-sizing:border-box;",
@@ -205,47 +202,6 @@
     ".cta-btn.worm-js .cta-face::after{",
     "  animation:none !important;",
     "}",
-    ".cta-deco{",
-    "  position:absolute;",
-    "  inset:0;",
-    "  pointer-events:none;",
-    "  z-index:0;",
-    "  opacity:0;",
-    "  transition:opacity 180ms ease-out;",
-    "}",
-    ".cta-btn:hover .cta-deco{opacity:0.9;}",
-    ".cta-deco-hash{",
-    "  position:absolute;",
-    "  top:7px;",
-    "  left:14px;",
-    "  font-size:8px;",
-    "  letter-spacing:0.12em;",
-    "  line-height:1;",
-    "  color:color-mix(in srgb, var(--yw-primary) 75%, transparent);",
-    "  transform:skewX(-18deg);",
-    "  text-shadow:0 0 6px color-mix(in srgb, var(--yw-primary) 50%, transparent);",
-    "}",
-    ".cta-deco-bars{",
-    "  position:absolute;",
-    "  left:16px;",
-    "  bottom:8px;",
-    "  display:flex;",
-    "  gap:2px;",
-    "  align-items:flex-end;",
-    "  height:6px;",
-    "}",
-    ".cta-deco-bars i{",
-    "  display:block;",
-    "  width:2px;",
-    "  background:color-mix(in srgb, var(--yw-primary) 70%, transparent);",
-    "  box-shadow:0 0 4px color-mix(in srgb, var(--yw-primary) 40%, transparent);",
-    "}",
-    ".cta-deco-bars i:nth-child(1){height:3px;}",
-    ".cta-deco-bars i:nth-child(2){height:5px;}",
-    ".cta-deco-bars i:nth-child(3){height:4px;}",
-    ".cta-deco-bars i:nth-child(4){height:6px;}",
-    ".cta-deco-bars i:nth-child(5){height:3px;}",
-    ".cta-deco-bars i:nth-child(6){height:5px;}",
     ".cta-btn-inner{",
     "  position:relative;",
     "  z-index:1;",
@@ -463,10 +419,6 @@
       btn.innerHTML =
         '<span class="cta-shell">' +
         '  <span class="cta-face">' +
-        '    <span class="cta-deco" aria-hidden="true">' +
-        '      <span class="cta-deco-hash">///// LOADING</span>' +
-        '      <span class="cta-deco-bars"><i></i><i></i><i></i><i></i><i></i><i></i></span>' +
-        "    </span>" +
         '    <span class="cta-btn-inner">' +
         '      <span class="cta-label">' +
         '        <span class="cta-label-main"></span>' +
@@ -569,9 +521,25 @@
       }
 
       var sizeWidth = this.getAttribute("size-width");
-      if (sizeWidth != null && sizeWidth !== "") root.style.setProperty("--yw-size-width", this._cssSize(sizeWidth));
+      if (sizeWidth != null && sizeWidth !== "") {
+        var w = this._cssSize(sizeWidth);
+        root.style.setProperty("--yw-size-width", w);
+        root.style.setProperty("width", w, "important");
+      } else {
+        root.style.setProperty("--yw-size-width", "100%");
+        root.style.removeProperty("width");
+      }
       var sizeHeight = this.getAttribute("size-height");
-      if (sizeHeight != null && sizeHeight !== "") root.style.setProperty("--yw-size-height", this._cssSize(sizeHeight));
+      if (sizeHeight != null && sizeHeight !== "") {
+        var h = this._cssSize(sizeHeight);
+        root.style.setProperty("--yw-size-height", h);
+        root.style.setProperty("height", h, "important");
+        root.style.setProperty("min-height", h, "important");
+      } else {
+        root.style.setProperty("--yw-size-height", "100%");
+        root.style.removeProperty("height");
+        root.style.removeProperty("min-height");
+      }
 
       var fontSize = this.getAttribute("font-size");
       if (fontSize) root.style.setProperty("--yw-font-size", this._cssSize(fontSize));
