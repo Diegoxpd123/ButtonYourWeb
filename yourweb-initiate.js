@@ -515,6 +515,15 @@
       return v === "off" || v === "false" || v === "0" || v === "no";
     }
 
+    // Wix a veces manda solo el número (ej. "204"). CSS necesita unidad → "204px".
+    _cssSize(val) {
+      if (val == null) return "";
+      var v = String(val).trim();
+      if (!v) return "";
+      if (/^-?\d+(\.\d+)?$/.test(v)) return v + "px";
+      return v;
+    }
+
     _applyAttributesToCSS() {
       var root = this.shadowRoot.host;
       if (!root) return;
@@ -533,7 +542,7 @@
       if (fontFamily) root.style.setProperty("--yw-font-family", fontFamily);
 
       var letterSpacing = this.getAttribute("letter-spacing");
-      if (letterSpacing) root.style.setProperty("--yw-letter-spacing", letterSpacing);
+      if (letterSpacing) root.style.setProperty("--yw-letter-spacing", this._cssSize(letterSpacing));
 
       var textTransform = this.getAttribute("text-transform");
       if (textTransform) root.style.setProperty("--yw-text-transform", textTransform);
@@ -542,14 +551,14 @@
       if (glowStrength) root.style.setProperty("--yw-glow-strength", glowStrength);
 
       var radius = this.getAttribute("radius");
-      if (radius) root.style.setProperty("--yw-radius", radius);
+      if (radius) root.style.setProperty("--yw-radius", this._cssSize(radius));
 
       var chamfer = this.getAttribute("chamfer");
-      if (chamfer) root.style.setProperty("--yw-chamfer", chamfer);
+      if (chamfer) root.style.setProperty("--yw-chamfer", this._cssSize(chamfer));
 
       var padding = this.getAttribute("padding");
       if (padding) {
-        var parts = padding.split(/\s+/);
+        var parts = padding.split(/\s+/).map((p) => this._cssSize(p));
         if (parts.length === 1) {
           root.style.setProperty("--yw-padding-block", parts[0]);
           root.style.setProperty("--yw-padding-inline", parts[0]);
@@ -560,12 +569,12 @@
       }
 
       var sizeWidth = this.getAttribute("size-width");
-      if (sizeWidth != null && sizeWidth !== "") root.style.setProperty("--yw-size-width", sizeWidth);
+      if (sizeWidth != null && sizeWidth !== "") root.style.setProperty("--yw-size-width", this._cssSize(sizeWidth));
       var sizeHeight = this.getAttribute("size-height");
-      if (sizeHeight != null && sizeHeight !== "") root.style.setProperty("--yw-size-height", sizeHeight);
+      if (sizeHeight != null && sizeHeight !== "") root.style.setProperty("--yw-size-height", this._cssSize(sizeHeight));
 
       var fontSize = this.getAttribute("font-size");
-      if (fontSize) root.style.setProperty("--yw-font-size", fontSize);
+      if (fontSize) root.style.setProperty("--yw-font-size", this._cssSize(fontSize));
 
       var glitchIntensity = this.getAttribute("glitch-intensity");
       if (glitchIntensity != null && glitchIntensity !== "") root.style.setProperty("--yw-glitch-intensity", glitchIntensity);
