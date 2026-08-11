@@ -12,11 +12,21 @@
       display: grid;
       place-items: center;
       font-family: system-ui, sans-serif;
+      gap: 24px;
     }
+    .box {
+      width: min(42vw, 280px);
+      height: min(14vw, 72px);
+      border: 1px dashed #333;
+    }
+    .box.sm { width: 160px; height: 44px; }
+    .box.lg { width: 420px; height: 96px; }
   </style>
 </head>
 <body>
-  <yourweb-initiate label="INITIATE" href="#"></yourweb-initiate>
+  <div class="box sm"><yourweb-initiate label="INITIATE" href="#"></yourweb-initiate></div>
+  <div class="box"><yourweb-initiate label="INITIATE" href="#"></yourweb-initiate></div>
+  <div class="box lg"><yourweb-initiate label="INITIATE" href="#"></yourweb-initiate></div>
   <script src="./yourweb-initiate.js"></script>
 </body>
 </html>

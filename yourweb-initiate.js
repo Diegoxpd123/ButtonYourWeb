@@ -7,18 +7,18 @@
  * - label              : texto del botón (default: "INITIATE")
  * - href               : URL de destino (default: "#")
  * - font-family        : fuente CSS (default: "Riosark, Riosarkregular, sans-serif")
- * - font-size          : tamaño de letra (default: "16px")
- * - letter-spacing     : tracking (default: "0.32em")
+ * - font-size          : tamaño de letra (default: clamp responsivo)
+ * - letter-spacing     : tracking (default: clamp responsivo)
  * - text-transform     : "uppercase" | "none" | etc. (default: "uppercase")
  * - primary-color      : color principal (default: "#C8FF00")
  * - text-color         : color del texto (default: mismo que primary-color)
  * - glow-strength      : número 0–1 para intensidad del glow (default: "1")
- * - padding            : padding del botón (default: "18px 52px")
+ * - padding            : padding del botón (default: clamp responsivo)
  * - radius             : border-radius si shape="pill" (default: "999px")
- * - chamfer            : corte de esquina si shape="chamfer" (default: "12px")
+ * - chamfer            : corte de esquina si shape="chamfer" (default: clamp responsivo)
  * - shape              : "chamfer" | "pill" (default: "chamfer")
- * - size-width         : ancho del botón (ej. "200px", "100%")
- * - size-height        : alto del botón (ej. "48px")
+ * - size-width         : ancho del botón (default: "100%")
+ * - size-height        : alto del botón (default: "100%")
  * - glitch             : "on" | "off" (default: "off")
  * - worm               : "on" | "off" (borde animado, default: "off")
  * - shadow             : "on" | "off" – sombra/glow del botón (default: "on")
@@ -49,22 +49,29 @@
     "}",
     "@property --gradient-angle{syntax:\"<angle>\";initial-value:0deg;inherits:false;}",
     ":host{",
-    "  display:inline-block;",
-    "  margin:16px;",
+    "  display:block;",
+    "  width:100%;",
+    "  height:100%;",
+    "  margin:0;",
+    "  padding:var(--yw-glow-pad);",
+    "  box-sizing:border-box;",
+    "  container-type:size;",
+    "  overflow:visible;",
     "  --yw-primary:#C8FF00;",
     "  --yw-text:var(--yw-primary);",
     "  --yw-font-family:\"Riosark\",\"Riosarkregular\",\"Riosark Regular\",sans-serif;",
-    "  --yw-font-size:16px;",
-    "  --yw-letter-spacing:0.32em;",
+    "  --yw-font-size:clamp(11px, 28cqh, 18px);",
+    "  --yw-letter-spacing:clamp(0.12em, 2.2cqi, 0.32em);",
     "  --yw-text-transform:uppercase;",
-    "  --yw-padding-block:18px;",
-    "  --yw-padding-inline:52px;",
+    "  --yw-padding-block:clamp(6px, 16cqh, 18px);",
+    "  --yw-padding-inline:clamp(10px, 7cqi, 48px);",
     "  --yw-radius:999px;",
-    "  --yw-chamfer:12px;",
+    "  --yw-chamfer:clamp(6px, 14cqh, 14px);",
     "  --yw-border:1.5px;",
+    "  --yw-glow-pad:clamp(8px, 4cqw, 18px);",
     "  --yw-glow-strength:1;",
-    "  --yw-size-width:auto;",
-    "  --yw-size-height:auto;",
+    "  --yw-size-width:100%;",
+    "  --yw-size-height:100%;",
     "  --yw-glitch-intensity:1;",
     "  --yw-bg-solidity:1;",
     "  --yw-clip:polygon(",
@@ -78,27 +85,36 @@
     "    0% var(--yw-chamfer)",
     "  );",
     "}",
-    ":host(.shadow-on){",
+    ":host(.shadow-on) .cta-glow{",
     "  filter:",
-    "    drop-shadow(0 0 calc(4px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 70%, transparent))",
-    "    drop-shadow(0 0 calc(14px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 40%, transparent));",
+    "    drop-shadow(0 0 calc(3px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 70%, transparent))",
+    "    drop-shadow(0 0 calc(10px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 40%, transparent));",
     "  transition:filter 200ms ease-out;",
     "}",
-    ":host(.shadow-on.hover-glow-on:hover){",
+    ":host(.shadow-on.hover-glow-on:hover) .cta-glow{",
     "  filter:",
-    "    drop-shadow(0 0 calc(6px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 95%, transparent))",
-    "    drop-shadow(0 0 calc(22px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 65%, transparent))",
-    "    drop-shadow(0 0 calc(44px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 35%, transparent))",
-    "    drop-shadow(0 0 calc(70px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 18%, transparent));",
+    "    drop-shadow(0 0 calc(5px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 95%, transparent))",
+    "    drop-shadow(0 0 calc(14px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 60%, transparent))",
+    "    drop-shadow(0 0 calc(24px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 30%, transparent));",
+    "}",
+    ".cta-glow{",
+    "  display:block;",
+    "  width:100%;",
+    "  height:100%;",
+    "  min-width:0;",
+    "  min-height:0;",
     "}",
     ".cta-btn{",
     "  all:unset;",
     "  position:relative;",
     "  --gradient-angle:0deg;",
-    "  display:inline-block;",
+    "  display:block;",
     "  width:var(--yw-size-width);",
     "  height:var(--yw-size-height);",
-    "  min-height:2.6em;",
+    "  max-width:100%;",
+    "  max-height:100%;",
+    "  min-width:0;",
+    "  min-height:0;",
     "  box-sizing:border-box;",
     "  cursor:pointer;",
     "  color:var(--yw-text);",
@@ -114,7 +130,8 @@
     "  position:relative;",
     "  width:100%;",
     "  height:100%;",
-    "  min-height:inherit;",
+    "  min-width:0;",
+    "  min-height:0;",
     "  box-sizing:border-box;",
     "  padding:var(--yw-border);",
     "  background:var(--yw-primary);",
@@ -130,10 +147,11 @@
     "  display:flex;",
     "  align-items:center;",
     "  justify-content:center;",
-    "  gap:18px;",
+    "  gap:0.85em;",
     "  width:100%;",
     "  height:100%;",
-    "  min-height:inherit;",
+    "  min-width:0;",
+    "  min-height:0;",
     "  box-sizing:border-box;",
     "  padding:var(--yw-padding-block) var(--yw-padding-inline);",
     "  clip-path:var(--yw-clip);",
@@ -147,7 +165,7 @@
     ".cta-face::before{",
     "  content:\"\";",
     "  position:absolute;",
-    "  inset:4px;",
+    "  inset:clamp(2px, 6cqh, 4px);",
     "  clip-path:var(--yw-clip);",
     "  border:1px solid color-mix(in srgb, var(--yw-primary) 28%, transparent);",
     "  opacity:0.55;",
@@ -234,22 +252,34 @@
     "  display:inline-flex;",
     "  align-items:center;",
     "  justify-content:center;",
-    "  gap:18px;",
+    "  gap:0.85em;",
+    "  max-width:100%;",
+    "  min-width:0;",
     "  will-change:transform;",
     "}",
-    ".cta-label{position:relative;overflow:hidden;}",
-    ".cta-label-main,.cta-label-ghost{display:block;}",
+    ".cta-label{",
+    "  position:relative;",
+    "  overflow:hidden;",
+    "  min-width:0;",
+    "  max-width:100%;",
+    "}",
+    ".cta-label-main,.cta-label-ghost{",
+    "  display:block;",
+    "  white-space:nowrap;",
+    "  overflow:hidden;",
+    "  text-overflow:ellipsis;",
+    "}",
     ".cta-label-main{",
     "  text-shadow:",
-    "    0 0 calc(6px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 70%, transparent),",
-    "    0 0 calc(14px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 35%, transparent);",
+    "    0 0 calc(0.35em * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 70%, transparent),",
+    "    0 0 calc(0.85em * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 35%, transparent);",
     "  transition:text-shadow 200ms ease-out;",
     "}",
     ".cta-btn:hover .cta-label-main{",
     "  text-shadow:",
-    "    0 0 calc(10px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 90%, transparent),",
-    "    0 0 calc(22px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 55%, transparent),",
-    "    0 0 calc(36px * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 25%, transparent);",
+    "    0 0 calc(0.55em * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 90%, transparent),",
+    "    0 0 calc(1.2em * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 55%, transparent),",
+    "    0 0 calc(1.8em * var(--yw-glow-strength)) color-mix(in srgb, var(--yw-primary) 25%, transparent);",
     "}",
     ".cta-label-ghost{",
     "  position:absolute;",
@@ -262,13 +292,13 @@
     "  clip-path:inset(0 0 0 0);",
     "}",
     ".cta-icon{",
-    "  width:16px;",
-    "  height:16px;",
+    "  width:1em;",
+    "  height:1em;",
     "  border-radius:999px;",
-    "  border:1.5px solid var(--yw-primary);",
+    "  border:0.1em solid var(--yw-primary);",
     "  box-shadow:",
-    "    0 0 8px color-mix(in srgb, var(--yw-primary) 80%, transparent),",
-    "    0 0 16px color-mix(in srgb, var(--yw-primary) 35%, transparent);",
+    "    0 0 0.5em color-mix(in srgb, var(--yw-primary) 80%, transparent),",
+    "    0 0 1em color-mix(in srgb, var(--yw-primary) 35%, transparent);",
     "  position:relative;",
     "  flex:0 0 auto;",
     "  transition:box-shadow 200ms ease-out, transform 200ms ease-out;",
@@ -276,7 +306,7 @@
     ".cta-icon::before{",
     "  content:\"\";",
     "  position:absolute;",
-    "  inset:3px;",
+    "  inset:0.2em;",
     "  border-radius:inherit;",
     "  border:1px solid color-mix(in srgb, var(--yw-primary) 0%, transparent);",
     "  opacity:0;",
@@ -291,17 +321,17 @@
     "  position:absolute;",
     "  top:50%;",
     "  left:50%;",
-    "  width:3.5px;",
-    "  height:3.5px;",
+    "  width:0.22em;",
+    "  height:0.22em;",
     "  border-radius:999px;",
     "  background:var(--yw-primary);",
-    "  box-shadow:0 0 8px var(--yw-primary);",
+    "  box-shadow:0 0 0.5em var(--yw-primary);",
     "  transform:translate(-50%,-50%);",
     "}",
     ".cta-btn:hover .cta-icon{",
     "  box-shadow:",
-    "    0 0 10px color-mix(in srgb, var(--yw-primary) 95%, transparent),",
-    "    0 0 22px color-mix(in srgb, var(--yw-primary) 55%, transparent);",
+    "    0 0 0.6em color-mix(in srgb, var(--yw-primary) 95%, transparent),",
+    "    0 0 1.2em color-mix(in srgb, var(--yw-primary) 55%, transparent);",
     "}",
     ".cta-scanline{",
     "  position:absolute;",
@@ -363,8 +393,7 @@
     ".cta-btn.overload-on:hover .cta-btn-inner{",
     "  animation-duration:0.08s;",
     "}",
-    ".cta-btn:hover{transform:translateY(-1px);}",
-    ".cta-btn:active{transform:translateY(0) scale(0.99);}",
+    ".cta-btn:active{transform:scale(0.995);}",
     ".cta-btn.no-shadow .cta-shell{background:color-mix(in srgb, var(--yw-primary) 70%, #333);}",
     ".cta-btn.no-icon .cta-icon{display:none;}",
     ".cta-btn.no-hover-glow:hover .cta-label-main{",
@@ -425,6 +454,9 @@
       style.textContent = STYLES;
       this.shadowRoot.appendChild(style);
 
+      var glow = document.createElement("span");
+      glow.className = "cta-glow";
+
       var btn = document.createElement("button");
       btn.type = "button";
       btn.className = "cta-btn overload-on";
@@ -438,14 +470,15 @@
         '    <span class="cta-btn-inner">' +
         '      <span class="cta-label">' +
         '        <span class="cta-label-main"></span>' +
-        '        <span class="cta-label-ghost"></span>' +
+        '        <span class="cta-label-ghost" aria-hidden="true"></span>' +
         "      </span>" +
         '      <span class="cta-icon" aria-hidden="true"></span>' +
         "    </span>" +
-        '    <span class="cta-scanline"></span>' +
+        '    <span class="cta-scanline" aria-hidden="true"></span>' +
         "  </span>" +
         "</span>";
-      this.shadowRoot.appendChild(btn);
+      glow.appendChild(btn);
+      this.shadowRoot.appendChild(glow);
 
       this._btn = btn;
       this._face = btn.querySelector(".cta-face");

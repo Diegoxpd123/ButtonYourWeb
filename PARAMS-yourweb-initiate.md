@@ -81,17 +81,17 @@ Todos los atributos son **opcionales**; si no se indican, se usan valores por de
 
 - **size-width**  
   - Qué hace: Ancho del botón.  
-  - Default: `auto` (el botón se adapta al contenido).  
+  - Default: `100%` (llena el Custom Element de Wix).  
   - Ejemplo: `size-width="280px"` o `size-width="100%"`
 
 - **size-height**  
   - Qué hace: Alto del botón.  
-  - Default: `auto` (altura mínima por contenido y padding).  
+  - Default: `100%` (llena el Custom Element de Wix).  
   - Ejemplo: `size-height="48px"`
 
 - **padding**  
   - Qué hace: Padding interno del botón.  
-  - Default: `16px 56px`.  
+  - Default: responsivo (`clamp` según el tamaño del contenedor).  
   - Formatos:
     - `"16px"` → aplica igual para vertical y horizontal.
     - `"16px 56px"` → `padding-block` y `padding-inline`.  
